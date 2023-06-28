@@ -1,5 +1,5 @@
 package com.deezproject.electronic.health.record.data.models;
 
 public enum BloodGroup {
-    A, B, AB, O;
+    A_POSITIVE, A_NEGATIVE, B_POSITIVE, B_NEGATIVE, AB_POSITIVE, AB_NEGATIVE, O_POSITIVE, O_NEGATIVE;
 }

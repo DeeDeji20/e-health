@@ -6,6 +6,7 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -21,7 +22,7 @@ public class Patient {
     private String phoneNumber;
     private String address;
     private String occupation;
-    private LocalDateTime dob;
+    private LocalDate dob;
     private BloodGroup bloodGroup;
     private Genotype genotype;
     private String registrationDate;
