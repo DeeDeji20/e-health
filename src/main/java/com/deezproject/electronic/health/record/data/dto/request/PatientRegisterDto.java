@@ -1,18 +1,15 @@
 package com.deezproject.electronic.health.record.data.dto.request;
 
-import com.deezproject.electronic.health.record.data.models.BloodGroup;
 import com.deezproject.electronic.health.record.data.models.Gender;
-import com.deezproject.electronic.health.record.data.models.Genotype;
-import com.deezproject.electronic.health.record.data.models.MedicateHistory;
 import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 @Builder
 public class PatientRegisterDto {
+    private Long id;
     private String firstName;
     private String lastName;
     private Gender gender;
@@ -27,5 +24,5 @@ public class PatientRegisterDto {
     private String modifiedDate;
     private String guardianName;
     private String guardianPhoneNumber;
-    private MedicateHistory medicalHistory;
+    private MedicalHistoryDto medicalHistory;
 }

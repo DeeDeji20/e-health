@@ -1,16 +1,18 @@
 package com.deezproject.electronic.health.record.data.models;
 
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
-import lombok.Data;
+import jakarta.persistence.*;
+import lombok.*;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Builder
-@Data
 public class Patient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,5 +31,8 @@ public class Patient {
     private String modifiedDate;
     private String guardianName;
     private String guardianPhoneNumber;
-    private MedicateHistory medicalHistory;
+    @OneToOne
+    @Cascade(CascadeType.ALL)
+    @JoinColumn(name = "medical_history_id")
+    private MedicalHistory medicalHistory;
 }
