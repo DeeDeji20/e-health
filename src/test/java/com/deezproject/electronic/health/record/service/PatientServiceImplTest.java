@@ -3,6 +3,7 @@ package com.deezproject.electronic.health.record.service;
 import com.deezproject.electronic.health.record.data.dto.request.MedicalHistoryDto;
 import com.deezproject.electronic.health.record.data.dto.request.PatientRegisterDto;
 import com.deezproject.electronic.health.record.data.dto.response.ApiResponse;
+import com.deezproject.electronic.health.record.data.exception.DuplicatePatientException;
 import com.deezproject.electronic.health.record.data.models.BloodGroup;
 import com.deezproject.electronic.health.record.data.models.Gender;
 import com.deezproject.electronic.health.record.data.models.Genotype;
@@ -78,5 +79,27 @@ class PatientServiceImplTest {
                 ()-> assertThat(response).isNotNull(),
                 ()-> assertThat(response.getMessage()).isEqualTo("Patient registered successfully")
         );
+    }
+
+    @Test
+    void patientAlreadyExistsTest(){
+        patientRegisterDto = PatientRegisterDto.builder()
+                .firstName("zane")
+                .lastName("Doe")
+                .address("Phase 2, Site 1")
+                .email("zane.doe@gmail")
+                .gender(Gender.MALE)
+                .occupation("Civil Engineer")
+                .phoneNumber("07023456788")
+                .dob(LocalDate.of(2000, 9, 15))
+                .registrationDate(String.valueOf(LocalDateTime.now()))
+                .genotype("AA")
+                .bloodGroup("O+")
+                .guardianName("Jane Doe")
+                .guardianPhoneNumber("0903456724")
+                .medicalHistory(medicalHistoryDto)
+                .build();
+
+        assertThrows(DuplicatePatientException.class,()-> patientService.registerPatient(patientRegisterDto));
     }
 }
