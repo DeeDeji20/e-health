@@ -13,4 +13,5 @@ public interface PatientRepo extends JpaRepository<Patient, Long> {
 
     Page<Patient> findByFirstName(String name, Pageable pageable);
 
+    Page<Patient> findByLastName(String name, Pageable pageRequest);
 }

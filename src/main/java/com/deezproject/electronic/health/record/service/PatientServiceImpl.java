@@ -63,8 +63,11 @@ public class PatientServiceImpl implements PatientService{
         if (pageNumber<1) pageNumber=1;
         Sort sortBy = Sort.by(Sort.Direction.DESC, REGISTRATION_DATE);
         Pageable pageRequest = PageRequest.of(pageNumber-1, PAGE_LIMIT, sortBy);
-
-        return patientRepo.findByFirstName(name, pageRequest);
+        Page<Patient> patients = patientRepo.findByFirstName(name, pageRequest);
+        if (patients.getContent().isEmpty()){
+            patients =patientRepo.findByLastName(name, pageRequest);
+        }
+        return patients.getContent().isEmpty()? Page.empty(): patients;
     }
 
     private boolean isValidEmail(String email) {
