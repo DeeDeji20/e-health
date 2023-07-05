@@ -19,13 +19,16 @@ public class Patient {
     private Long id;
     private String firstName;
     private String lastName;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private String email;
     private String phoneNumber;
     private String address;
     private String occupation;
     private LocalDate dob;
+    @Enumerated(EnumType.STRING)
     private BloodGroup bloodGroup;
+    @Enumerated(EnumType.STRING)
     private Genotype genotype;
     private String registrationDate;
     private String modifiedDate;

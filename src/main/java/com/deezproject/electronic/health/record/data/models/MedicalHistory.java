@@ -19,8 +19,6 @@ public class MedicalHistory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @OneToOne(mappedBy = "medicalHistory")
-    private Patient patientId;
 //    @OneToMany
 //    @ElementCollection(fetch = FetchType.EAGER)
 //    @JoinColumn(name = "patient_id")

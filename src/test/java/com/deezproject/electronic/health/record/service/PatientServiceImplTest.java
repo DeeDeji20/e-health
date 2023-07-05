@@ -8,6 +8,7 @@ import com.deezproject.electronic.health.record.data.exception.InvalidEmailExcep
 import com.deezproject.electronic.health.record.data.models.BloodGroup;
 import com.deezproject.electronic.health.record.data.models.Gender;
 import com.deezproject.electronic.health.record.data.models.Genotype;
+import com.deezproject.electronic.health.record.data.models.Patient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.junit.jupiter.api.AfterEach;
@@ -15,11 +16,13 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,14 +54,14 @@ class PatientServiceImplTest {
                 .firstName("zane")
                 .lastName("Doe")
                 .address("Phase 2, Site 1")
-                .email("zane.doe@gmail")
+                .email("zaneDoe@gmail.com")
                 .gender(Gender.MALE)
                 .occupation("Civil Engineer")
                 .phoneNumber("07023456788")
                 .dob(LocalDate.of(2000, 9, 15))
                 .registrationDate(String.valueOf(LocalDateTime.now()))
                 .genotype("AA")
-                .bloodGroup("O+")
+                .bloodGroup("O_POSITIVE")
                 .guardianName("Jane Doe")
                 .guardianPhoneNumber("0903456724")
                 .medicalHistory(medicalHistoryDto)
@@ -123,6 +126,26 @@ class PatientServiceImplTest {
                 .medicalHistory(medicalHistoryDto)
                 .build();
         assertThrows(InvalidEmailException.class,()-> patientService.registerPatient(patientRegisterDto));
+
+    }
+
+    @Test
+    void findPatientByFirstNameTest(){
+        Page<Patient> patients = patientService.findByName("zane", 1);
+       assertAll(
+               ()-> assertThat(patients.getTotalElements()).isEqualTo(1),
+               ()-> assertThat(patients.stream().findFirst().get().getFirstName()).isEqualTo("zane")
+       );
+
+    }
+
+    @Test
+    void findPatientByLastNameTest(){
+        Page<Patient> patients = patientService.findByName("Doe", 1);
+        assertAll(
+                ()-> assertThat(patients.getTotalElements()).isEqualTo(1),
+                ()-> assertThat(patients.stream().findFirst().get().getLastName()).isEqualTo("Doe")
+        );
 
     }
 }
