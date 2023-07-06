@@ -60,13 +60,18 @@ public class PatientServiceImpl implements PatientService{
 
     @Override
     public Page<Patient> findByName(String name, int pageNumber) {
+        String[] splitString =name.split(" ");
         if (pageNumber<1) pageNumber=1;
         Sort sortBy = Sort.by(Sort.Direction.DESC, REGISTRATION_DATE);
         Pageable pageRequest = PageRequest.of(pageNumber-1, PAGE_LIMIT, sortBy);
-        Page<Patient> patients = patientRepo.findByFirstName(name, pageRequest);
-        if (patients.getContent().isEmpty()){
-            patients =patientRepo.findByLastName(name, pageRequest);
+        Page<Patient> patients = Page.empty();
+        for (String str : splitString) {
+           patients= patientRepo.findByFirstName(str, pageRequest);
+            if (patients.getContent().isEmpty()){
+                patients =patientRepo.findByLastName(str, pageRequest);
+            }
         }
+
         return patients.getContent().isEmpty()? Page.empty(): patients;
     }
 

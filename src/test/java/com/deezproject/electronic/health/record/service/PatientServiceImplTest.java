@@ -148,4 +148,21 @@ class PatientServiceImplTest {
         );
 
     }
+
+    @Test
+    void findPatientByFirstNameAndLastNameTest(){
+        Page<Patient> patients = patientService.findByName("zane Doe", 1);
+        assertAll(
+                ()-> assertThat(patients.getTotalElements()).isEqualTo(1),
+                ()-> assertThat(patients.stream().findFirst().get().getLastName()).isEqualTo("Doe")
+        );
+
+    }
+
+//    @Test
+//    void getPatientDetailsTest(){
+//        Patient patient = patientService.findPatientById(702L);
+//
+//        asse
+//    }
 }
